@@ -30,7 +30,7 @@ describe Blog do
       post_source.expect(:call, @new_post, [{x: 42, y: "z"}])
       @it.post_source = post_source
       @it.new_post(x: 42, y: "z")
-      post_source.verify!
+      post_source.verify
     end
 
   end
