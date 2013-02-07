@@ -1,4 +1,5 @@
 require "minitest/autorun"
+require_relative "../spec_helper_lite"
 require_relative "../../app/models/blog"
 require "ostruct"
 
@@ -11,6 +12,18 @@ describe Blog do
     @it.entries.must_be_empty
   end
   
+  it "is not valid with a blank title" do
+    [nil, "", " "].each do |bad_title|
+      @it.title = bad_title
+      refute @it.valid?
+    end
+  end
+
+  it "is valid with a non-blank title" do
+    @it.title = "Superman rocks!"
+    assert @it.valid?
+  end
+
   describe "#new_post" do
     before do
       @new_post = OpenStruct.new
@@ -37,9 +50,35 @@ describe Blog do
 
   describe "#add_entry" do
     it "adds the entry to the blog" do
-      entry = Object.new
+      entry = stub!
       @it.add_entry(entry)
       @it.entries.must_include entry
+    end
+  end
+
+  describe "#entries" do
+    def stub_entry_with_date(date)
+      OpenStruct.new(pubdate: DateTime.parse(date))
+    end
+
+    it "is sorted in reverse-chronological order" do
+      oldest = stub_entry_with_date("2012-02-08")
+      newest = stub_entry_with_date("2012-02-10")
+      middle = stub_entry_with_date("2012-02-09")
+      @it.add_entry(oldest)
+      @it.add_entry(newest)
+      @it.add_entry(middle)
+      @it.entries.must_equal([newest, middle, oldest])
+    end
+
+    it "is limited to 10 items" do
+      10.times do |i|
+        @it.add_entry(stub_entry_with_date("2012-02-#{i+1}"))
+      end
+      oldest = stub_entry_with_date("2012-01-31")
+      @it.add_entry(oldest)
+      @it.entries.size.must_equal(10)
+      @it.entries.wont_include(oldest)
     end
   end
 end 
