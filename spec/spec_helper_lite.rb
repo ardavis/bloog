@@ -13,3 +13,7 @@ def stub_module(full_name)
     end
   end
 end
+
+def stub_class(name)
+  Class.new
+end

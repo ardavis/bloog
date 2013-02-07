@@ -4,7 +4,7 @@ class Post
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :blog, :title, :body, :pubdate
+  attr_accessor :blog, :title, :body, :image_url, :pubdate
 
   validates :title, presence: true
 
@@ -18,6 +18,10 @@ class Post
     return false unless valid?
     self.pubdate = clock.now
     blog.add_entry(self)
+  end
+
+  def picture?
+    image_url.present?
   end
 
   def persisted?

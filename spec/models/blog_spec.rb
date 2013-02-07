@@ -11,18 +11,6 @@ describe Blog do
   it "has no entries" do
     @it.entries.must_be_empty
   end
-  
-  it "is not valid with a blank title" do
-    [nil, "", " "].each do |bad_title|
-      @it.title = bad_title
-      refute @it.valid?
-    end
-  end
-
-  it "is valid with a non-blank title" do
-    @it.title = "Superman rocks!"
-    assert @it.valid?
-  end
 
   describe "#new_post" do
     before do
