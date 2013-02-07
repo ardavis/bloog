@@ -7,6 +7,10 @@ gem 'haml-rails'
 gem 'therubyracer'
 gem 'execjs'
 
+group :development, :test do
+  gem 'rr'
+end
+
 group :test do
   gem 'turn', require: :false
 end

@@ -1,13 +1,22 @@
+require 'date'
 class Post
-  attr_accessor :blog, :title, :body
+  extend ActiveModel::Naming
+  include ActiveModel::Conversion
+
+  attr_accessor :blog, :title, :body, :pubdate
 
   def initialize(attrs={})
-    attrs.each do |k, v|
-      send("#{k}=", v)
+    attrs.each do |key, value|
+      send("#{key}=", value)
     end
   end
 
-  def publish
+  def publish(clock = DateTime)
+    self.pubdate = clock.now
     blog.add_entry(self)
+  end
+
+  def persisted?
+    false
   end
 end
