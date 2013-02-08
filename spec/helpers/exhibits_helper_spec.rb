@@ -1,9 +1,15 @@
 require "minitest/autorun"
 require_relative "../spec_helper_lite"
+require_relative "../../app/exhibits/exhibit.rb"
 require_relative "../../app/helpers/exhibits_helper"
 
-stub_class "PicturePostExhibit"
-stub_class "TextPostExhibit"
+require_relative "../../app/exhibits/picture_post_exhibit"
+require_relative "../../app/exhibits/text_post_exhibit"
+require_relative "../../app/exhibits/link_post_exhibit"
+
+#stub_class "PicturePostExhibit", "Exhibit"
+#stub_class "TextPostExhibit", "Exhibit"
+#stub_class "LinkPostExhibit", "Exhibit"
 stub_class "Post"
 
 describe ExhibitsHelper do

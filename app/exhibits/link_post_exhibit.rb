@@ -1,4 +1,4 @@
-class LinkExhibit < Exhibit
+class LinkPostExhibit < Exhibit
   def render_body
     @context.render(partial: "/posts/link_body", locals: { post: self })
   end

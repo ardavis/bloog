@@ -14,6 +14,6 @@ def stub_module(full_name)
   end
 end
 
-def stub_class(name)
-  Class.new
+def stub_class(name, superclass=Object)
+  eval("class #{name} < #{superclass}; end")
 end

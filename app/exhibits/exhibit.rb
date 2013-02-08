@@ -1,7 +1,7 @@
-
 require "delegate"
 
 class Exhibit < SimpleDelegator
+
   def initialize(model, context)
     @context = context
     super(model)
@@ -14,18 +14,12 @@ class Exhibit < SimpleDelegator
   def class
     __getobj__.class
   end
-
-  def self.exhibit(object, context)
-    exhibts.inject(object) do |object, exhibit|
-      exhibit.exhibit_if_applicable(object, context)
-    end
-  end
-
+  
   def self.exhibits
     [
       TextPostExhibit,
       PicturePostExhibit,
-      LinkExhibit
+      LinkPostExhibit
     ]
   end
 
@@ -39,5 +33,14 @@ class Exhibit < SimpleDelegator
 
   def self.applicable_to?(object)
     false
+  end
+  
+  def self.exhibit(object, context)
+    exhibits.inject(object) do |object, exhibit|
+      puts "Object: " + object.inspect
+      puts "Exhibit: " + exhibit.inspect
+      puts ""
+      exhibit.exhibit_if_applicable(object, context)
+    end
   end
 end
